@@ -1,0 +1,20 @@
+version: "3.10"
+
+services:
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-manager-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data   # persist SQLite or other files
+      - ./:/app:cached     # mount source code for development
+    environment:
+      MODULE_NAME: app.main
+      VARIABLE_NAME: app
+      PORT: 8000
+      PYTHONDONTWRITEBYTECODE: 1
+      PYTHONUNBUFFERED: 1
+    restart: unless-stopped

@@ -1,0 +1,23 @@
+[project]
+name = "task-manager-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "argon2-cffi>=25.1.0",
+    "fastapi>=0.135.1",
+    "httpx>=0.28.1",
+    "mypy>=1.19.1",
+    "passlib[bcrypt]>=1.7.4",
+    "pip>=26.0.1",
+    "pydantic[email]>=2.12.5",
+    "pytest>=9.0.2",
+    "python-dotenv>=1.2.2",
+    "python-jose>=3.5.0",
+    "python-multipart>=0.0.22",
+    "sqlalchemy>=2.0.48",
+    "types-passlib>=1.7.7.20260211",
+    "types-python-jose>=3.5.0.20250531",
+    "uvicorn>=0.41.0",
+]
