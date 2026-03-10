@@ -27,6 +27,38 @@ pytest
 ```
 The tests use a temporary SQLite database so they will not modify your local development database.
  
+**Docker & Docker Compose**
+
+- **Requirements:** Install Docker Engine and Docker Compose (or use the integrated `docker` CLI with `docker compose`).
+
+- **Build the image (optional):**
+```bash
+docker build -t task-manager-api .
+```
+
+- **Run the container using docker run. Make sure you have created a .env file first (see instructions above):**
+```bash
+docker run --env-file .env -p 8000:8000 task-manager-api
+```
+
+- **Run with Docker Compose:** (recommended for development)
+```bash
+# Build and start services (foreground):
+docker-compose up --build
+# Or with the modern Docker CLI plugin:
+docker compose up --build
+# Run detached:
+docker-compose up -d --build
+```
+
+- **Helpful commands:**
+   - Stop and remove containers: `docker-compose down`
+   - View service logs: `docker-compose logs -f`
+
+- **Notes:**
+   - The provided [docker-compose.yml](docker-compose.yml) mounts `./data:/app/data` to persist database/files and `./:/app:cached` for live code reload during development. For production, remove the source bind mount and persist data using a dedicated volume or managed database.
+   - The app will be available at http://localhost:8000 and Swagger UI at http://localhost:8000/docs when the container is running.
+
  **Authentication**
  
  - Authentication uses OAuth2 with a password. Once you have created an account with /auth/register, you can use the email and password to login via /auth/login. If using the swagger UI, you can use the Authorize button at the top with your email and password to authenticate all of the endpoints.
