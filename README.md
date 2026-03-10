@@ -4,7 +4,7 @@
  
  **Quickstart / Run locally**
  
- - This project uses uv for environment and dependency tooling. To install all required modules for development, install `uv` and run `uv sync`:
+ - This project uses `uv` for environment and dependency tooling. To install all required modules for development, install `uv` and run `uv sync`:
 ```bash
 pip install uv
 uv sync
