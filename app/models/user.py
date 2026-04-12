@@ -3,7 +3,9 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
+    from app.models.job import Job
     from .task import Task
 
 from sqlalchemy import String, Boolean, DateTime
@@ -30,3 +32,4 @@ class User(Base):
 
     # One-to-many relationship
     tasks: Mapped[list["Task"]] = relationship(back_populates="owner")
+    jobs: Mapped[list["Job"]] = relationship(back_populates="owner")

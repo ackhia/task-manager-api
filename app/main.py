@@ -2,7 +2,7 @@
 import os
 
 from fastapi import FastAPI
-from app.routes import tasks, auth, users
+from app.routes import tasks, auth, users, ai
 from app.db.init_db import init_db 
 from dotenv import load_dotenv
 
@@ -22,6 +22,7 @@ def create_app() -> FastAPI:
     app.include_router(auth.router, prefix=prefix, tags=["auth"])
     app.include_router(tasks.router, prefix=prefix, tags=["tasks"])
     app.include_router(users.router, prefix=prefix, tags=["users"])
+    app.include_router(ai.router, prefix=prefix, tags=["ai"])
     return app
 
 app = create_app()

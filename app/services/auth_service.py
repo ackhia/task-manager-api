@@ -4,7 +4,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-from app.models.user import User
+from app.models import User
 
 # ----------------------------
 # JWT Settings (use env variables in prod!)
