@@ -1,8 +1,8 @@
 
 
 class OpenAIClient:
-    def __init__(self, api_key: str = ""):
-        self.api_key = api_key
+    def __init__(self):
+        pass
         # Initialize OpenAI client here (e.g., using openai library)
 
     async def generate_tasks(self, description: str) -> str:

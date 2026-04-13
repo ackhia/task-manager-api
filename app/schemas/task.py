@@ -36,3 +36,7 @@ class TaskRead(TaskBase):
 
     class Config:
         from_attributes = True  
+
+# Used to create tasks from a description
+class CreateTasksRequest(BaseModel):
+    desc: str

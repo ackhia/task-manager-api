@@ -1,13 +1,15 @@
+import uuid
+
 
 from app.models.user import User
 from sqlalchemy.orm import Session
-from fastapi import Depends
 from app.ai_clients import OpenAIClient
-from app.schemas.async_job import AsyncJob
-from app.models.task import Task
 from app.models import Job
+from app.workers.task_worker import enqueue_create_tasks
 
-import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # ----------------------------
@@ -17,15 +19,41 @@ async def create_tasks(db: Session, desc: str, owner: User, ai_client: OpenAICli
     """
     Creates a new task in the database, linked to the owner (user).
     """
-    job_id = await ai_client.generate_tasks(desc)
-
     job = Job(
-        job_id=job_id,
+        id=uuid.uuid4(),
         status="pending",
-        owner_id=owner.id
+        owner_id=owner.id,
     )
+
     db.add(job)
-    db.commit()
-    db.refresh(job)
+
+    try:
+        db.commit()
+        db.refresh(job)
+
+        enqueue_create_tasks.send(desc, str(job.id))
+
+        return job
+
+    except Exception:
+        db.rollback()
+        raise
+
+
+class JobNotFound(Exception):
+    pass
+
+# ----------------------------
+# Get the status of a job
+# ----------------------------
+def get_job_status(db: Session, job_id: uuid.UUID, owner: User) -> Job:
+    job = (
+        db.query(Job)
+        .filter(Job.id == job_id, Job.owner_id == owner.id)
+        .first()
+    )
+
+    if not job:
+        raise JobNotFound()
 
     return job
